@@ -1,8 +1,6 @@
 package com.project.parking_management.core.domain.dto.request;
 
 import com.project.parking_management.core.domain.entity.Booking;
-import com.project.parking_management.core.domain.entity.ParkingArea;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

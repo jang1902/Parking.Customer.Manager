@@ -1,7 +1,6 @@
 package com.project.parking_management.core.domain.dto.response;
 
 import com.project.parking_management.core.domain.entity.Booking;
-import com.project.parking_management.core.domain.entity.ParkingArea;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
