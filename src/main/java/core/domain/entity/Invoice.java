@@ -27,7 +27,7 @@ public class Invoice {
 
     @Column
     @ManyToOne
-    @JoinColumn(name = "vehicleId", nullable = false)
+    @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
     @Column(nullable = false)

@@ -3,6 +3,8 @@ package core.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -22,6 +24,12 @@ public class Vehicle {
 
     @Column
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "vehicle")
+    private List<Invoice> invoices;
+
+    @OneToMany(mappedBy = "vehicle")
+    private List<Ticket> tickets;
 }

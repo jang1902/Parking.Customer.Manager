@@ -3,6 +3,8 @@ package core.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -32,4 +34,7 @@ public class User {
 
     @Column(nullable = false)
     private String identity;
+
+    @OneToMany(mappedBy = "user")
+    private List<Vehicle> vehicles;
 }
