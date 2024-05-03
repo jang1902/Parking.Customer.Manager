@@ -1,9 +1,6 @@
 package com.project.parking_management.core.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,29 +10,30 @@ import lombok.Setter;
 @Entity
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(unique = true)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Column
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column
+    @Column(name = "full_name")
     @NotNull
     private String fullName;
 
-    @Column(unique = true)
+    @Column(name = "phone_number", unique = true)
     private String phoneNumber;
 
-    @Column
+    @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "identity", nullable = false)
     private String identity;
 
 }

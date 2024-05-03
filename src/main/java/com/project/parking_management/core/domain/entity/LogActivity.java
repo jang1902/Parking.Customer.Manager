@@ -13,16 +13,17 @@ import java.time.LocalDateTime;
 public class LogActivity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "timestamp", nullable = false)
     private LocalDateTime timestamp;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "activity", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Activity activity;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 }

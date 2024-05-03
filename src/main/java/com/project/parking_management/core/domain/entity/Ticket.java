@@ -13,15 +13,16 @@ import lombok.*;
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    private LocalDateTime createdDate;
+    @Column(name = "created_time", nullable = false)
+    private LocalDateTime createdTime;
 
-    @Column(nullable = false)
-    private LocalDateTime expiredDate;
+    @Column(name = "expired_time", nullable = false)
+    private LocalDateTime expiredTime;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 }

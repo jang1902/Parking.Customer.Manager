@@ -13,20 +13,18 @@ import java.util.List;
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private VehicleTypeEnum vehicleType;
 
-    @Column(nullable = false)
+    @Column(name = "plate", nullable = false)
     private String plate;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    @OneToMany(mappedBy = "vehicle")
-    private List<Ticket> tickets;
 
 }

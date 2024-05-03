@@ -14,22 +14,23 @@ import lombok.*;
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL)
-    private VehicleTypeEnum vehicleType;
+    @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private InvoiceTypeEnum invoiceType;
 
-    @Column(nullable = false)
+    @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(nullable = false)
+    @Column(name = "created_time", nullable = false)
     private LocalDateTime createdTime;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
-    @Column(nullable = false)
+    @Column(name = "parking_lot_id", nullable = false)
     private Long parkingLotId;
 }
