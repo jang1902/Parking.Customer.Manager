@@ -16,10 +16,10 @@ public class Ticket {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime createdTime;
+    private LocalDateTime createdDate;
 
     @Column(nullable = false)
-    private LocalDateTime expiredTime;
+    private LocalDateTime expiredDate;
 
     @ManyToOne
     @JoinColumn(nullable = false)
