@@ -1,9 +1,12 @@
 package com.project.parking_management.core.domain.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -20,11 +23,11 @@ public class User {
     private String password;
 
     @Column
-    @NonNull
-    private String fullname;
+    @NotNull
+    private String fullName;
 
     @Column(unique = true)
-    private String phone_number;
+    private String phoneNumber;
 
     @Column
     private String address;

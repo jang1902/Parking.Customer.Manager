@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 @Setter
 public class BookingDtoResponse {
     private Long id;
-    private LocalDateTime estimated_starttime;
-    private LocalDateTime estimated_endtime;
-    private Long parking_area_id;
-    private Long vehicle_id;
+    private LocalDateTime estimatedStartTime;
+    private LocalDateTime estimatedEndTime;
+    private Long parkingAreaId;
+    private Long vehicleId;
 }

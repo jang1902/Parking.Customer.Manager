@@ -9,9 +9,9 @@ public class ParkingAreaDtoResponse {
     private Long id;
     private String name;
     private String type;
-    private int total_space;
-    private int priority_space;
-    private int remaining_space;
-    private int remaining_priority_space;
-    private int parking_lot_id;
+    private int totalSpace;
+    private int prioritySpace;
+    private int remainingSpace;
+    private int remainingPrioritySpace;
+    private int parkingLotId;
 }
