@@ -16,11 +16,11 @@ public class Ticket {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "created_time", nullable = false)
-    private LocalDateTime createdTime;
+    @Column(name = "created_date", nullable = false)
+    private LocalDateTime createdDate;
 
-    @Column(name = "expired_time", nullable = false)
-    private LocalDateTime expiredTime;
+    @Column(name = "expired_date", nullable = false)
+    private LocalDateTime expiredDate;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id", nullable = false)

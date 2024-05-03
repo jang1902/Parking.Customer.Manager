@@ -24,8 +24,8 @@ public class Invoice {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(name = "created_time", nullable = false)
-    private LocalDateTime createdTime;
+    @Column(name = "created_date", nullable = false)
+    private LocalDateTime createdDate;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id", nullable = false)
