@@ -22,7 +22,8 @@ public class ParkingArea {
     private String name;
 
     @Column(name = "type", nullable = false)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private ParkingAreaTypeEnum type;
 
     @Column(name = "total_space", nullable = false)
     private int total_space;
