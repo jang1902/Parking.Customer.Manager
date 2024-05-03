@@ -3,6 +3,8 @@ package com.project.parking_management.core.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -23,4 +25,8 @@ public class Vehicle {
     @ManyToOne
     @JoinColumn(nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "vehicle")
+    private List<Ticket> tickets;
+
 }
