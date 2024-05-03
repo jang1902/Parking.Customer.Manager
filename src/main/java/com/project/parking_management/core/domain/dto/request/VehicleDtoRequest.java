@@ -16,5 +16,5 @@ public class VehicleDtoRequest {
 
     private String plate;
 
-    private Long user_id;
+    private Long userId;
 }

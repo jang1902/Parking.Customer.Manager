@@ -16,6 +16,6 @@ public class VehicleDtoResponse {
 
     private String plate;
 
-    private Long user_id;
+    private Long userId;
 
 }

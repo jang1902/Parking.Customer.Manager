@@ -6,9 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ParkingLotDtoResponse {
-    Long id;
-    String name;
-    String address;
-    double latitude;
-    double longitude;
+    private Long id;
+    private String name;
+    private String address;
+    private double latitude;
+    private double longitude;
 }
