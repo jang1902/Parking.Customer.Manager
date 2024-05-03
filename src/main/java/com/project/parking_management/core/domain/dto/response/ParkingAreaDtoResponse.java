@@ -1,11 +1,11 @@
-package com.project.parking_management.core.domain.dto.Request;
+package com.project.parking_management.core.domain.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ParkingAreaDtoRequest {
+public class ParkingAreaDtoResponse {
     private Long id;
     private String name;
     private String type;

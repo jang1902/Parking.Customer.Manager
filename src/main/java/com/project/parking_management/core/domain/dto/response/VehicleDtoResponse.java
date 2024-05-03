@@ -1,4 +1,4 @@
-package com.project.parking_management.core.domain.dto.Response;
+package com.project.parking_management.core.domain.dto.response;
 
 import com.project.parking_management.core.domain.entity.VehicleTypeEnum;
 import jakarta.persistence.EnumType;
