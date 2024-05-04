@@ -60,4 +60,5 @@ public abstract class BaseJPAAdapter<T, ID, R extends BaseRepository<T, ID>> {
     public void delete(ID id) {
         this.repository.deleteById(id);
     }
+
 }

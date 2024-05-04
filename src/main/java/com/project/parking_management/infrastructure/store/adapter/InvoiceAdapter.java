@@ -12,4 +12,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class InvoiceAdapter extends BaseJPAAdapter<Invoice, Long, InvoiceRepository> implements InvoiceStore {
 
+    @Override
+    public void saveInvoice(Invoice invoice) {
+        this.save(invoice);
+    }
 }

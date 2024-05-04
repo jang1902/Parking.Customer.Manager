@@ -98,4 +98,5 @@ public class TicketServiceImpl implements TicketService {
         return vehicleRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Vehicle is not found with id " + id + "!"));
     }
+
 }

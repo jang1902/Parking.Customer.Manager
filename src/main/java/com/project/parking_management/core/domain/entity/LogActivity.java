@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "log_activity")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,4 +27,10 @@ public class LogActivity {
     @ManyToOne
     @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
+
+    public LogActivity(Activity activity, Vehicle vehicle) {
+        this.timestamp = LocalDateTime.now();
+        this.activity = activity;
+        this.vehicle = vehicle;
+    }
 }

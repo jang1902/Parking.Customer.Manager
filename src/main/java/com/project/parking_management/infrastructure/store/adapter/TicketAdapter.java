@@ -12,4 +12,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TicketAdapter extends BaseJPAAdapter<Ticket, Long, TicketRepository> implements TicketStore {
 
+    @Override
+    public Ticket getTicket(Long id) {
+        return this.get(id);
+    }
 }

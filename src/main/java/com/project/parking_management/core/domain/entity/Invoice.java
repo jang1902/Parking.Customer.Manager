@@ -34,4 +34,12 @@ public class Invoice {
 
     @Column(name = "parking_lot_id", nullable = false)
     private Long parkingLotId;
+
+    public Invoice(InvoiceTypeEnum invoiceType, Double price, Vehicle vehicle, Long parkingLotId) {
+        this.invoiceType = invoiceType;
+        this.price = price;
+        this.createdDate = LocalDateTime.now();
+        this.vehicle = vehicle;
+        this.parkingLotId = parkingLotId;
+    }
 }
