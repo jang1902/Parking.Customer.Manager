@@ -9,6 +9,7 @@ import com.project.parking_management.core.domain.dto.response.NearestTransitRes
 import com.project.parking_management.core.domain.entity.ParkingLot;
 import com.project.parking_management.core.service.NearestTransitService;
 import com.project.parking_management.core.service.ParkingLotService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class NearestTransitServiceImpl implements NearestTransitService {
     private final GeoApiContext context;
     private final ParkingLotService parkingLotService;
 
+    @Autowired
     public NearestTransitServiceImpl(GoogleApiConfig config , ParkingLotService parkingLotService) {
         context=new GeoApiContext.Builder().apiKey(config.getApiKey()).build();
         this.parkingLotService=parkingLotService;
