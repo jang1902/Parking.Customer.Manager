@@ -10,7 +10,5 @@ public class GoogleApiConfig {
     @Value("${google.maps.api.key}")
     private String apiKey;
 
-    public String getApiKey() {
-        return apiKey;
-    }
+
 }
