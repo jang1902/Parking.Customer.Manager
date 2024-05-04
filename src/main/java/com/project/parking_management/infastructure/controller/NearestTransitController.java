@@ -1,7 +1,6 @@
 package com.project.parking_management.infastructure.controller;
 
 import com.google.maps.model.LatLng;
-import com.project.parking_management.core.domain.dto.response.GeoLocationResponse;
 import com.project.parking_management.core.domain.dto.response.NearestTransitResponse;
 import com.project.parking_management.core.service.NearestTransitService;
 import org.springframework.web.bind.annotation.GetMapping;
