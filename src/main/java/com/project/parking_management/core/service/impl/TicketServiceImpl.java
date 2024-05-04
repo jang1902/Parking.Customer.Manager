@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -73,7 +74,7 @@ public class TicketServiceImpl implements TicketService {
                 .filter(invoice -> invoice.getInvoiceType() == InvoiceTypeEnum.MONTHLYTICKETPAY)
                 .filter(invoice -> invoice.getVehicle().getId().equals(vehicleId))
                 .filter(invoice -> invoice.getParkingLotId().equals(parkingLotId))
-                .min((inv1, inv2) -> inv2.getCreatedDate().compareTo(inv1.getCreatedDate()));
+                .max(Comparator.comparing(Invoice::getCreatedDate));
 
         LocalDateTime createdDate = optionalInvoice.map(Invoice::getCreatedDate).orElse(null);
 
