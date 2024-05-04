@@ -34,8 +34,8 @@ public class TicketServiceImpl implements TicketService {
             boolean checkVehicleOwner = checkVehicleOwner(request.getUserId(), request.getVehicleId());
             boolean checkExistedMonthlyTicket = checkExistedMonthlyTicket(request.getVehicleId(), request.getParkingLotId());
 
-            if(!checkVehicleOwner) return new ResponseEntity<>("Xe không thuộc về chủ sở hữu", HttpStatus.BAD_REQUEST);
-            if(checkExistedMonthlyTicket) return new ResponseEntity<>("Xe đã đăng ký vé tháng trước đó", HttpStatus.BAD_REQUEST);
+            if(!checkVehicleOwner) return new ResponseEntity<>("Xe không thuộc về chủ sở hữu!", HttpStatus.BAD_REQUEST);
+            if(checkExistedMonthlyTicket) return new ResponseEntity<>("Xe đã đăng ký vé tháng trước đó!", HttpStatus.BAD_REQUEST);
 
             LocalDateTime currentTime = LocalDateTime.now();
 
@@ -56,10 +56,10 @@ public class TicketServiceImpl implements TicketService {
             ticketRepository.save(ticket);
             invoiceRepository.save(invoice);
 
-            return new ResponseEntity<>("Tạo vé tháng thành công", HttpStatus.OK);
+            return new ResponseEntity<>("Tạo vé tháng thành công!", HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntity<>("Tạo vé tháng thất bại", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Tạo vé tháng thất bại!", HttpStatus.BAD_REQUEST);
         }
 
     }
@@ -96,6 +96,6 @@ public class TicketServiceImpl implements TicketService {
 
     private Vehicle findVehicle(Long id) {
         return vehicleRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Vehicle is not found with id " + id));
+                .orElseThrow(() -> new NoSuchElementException("Vehicle is not found with id " + id + "!"));
     }
 }
