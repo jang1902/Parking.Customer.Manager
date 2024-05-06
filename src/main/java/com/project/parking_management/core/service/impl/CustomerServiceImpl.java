@@ -23,11 +23,10 @@ public class CustomerServiceImpl implements CustomerService {
     private final TicketStore ticketStore;
     private final InvoiceStore invoiceStore;
     private final LogActivityStore logActivityStore;
-    private final TicketRepository ticketRepository;
 
     @Override
     public ResponseEntity<String> enterParkingLot(Long ticketId, Long parkingLotId) {
-        Ticket ticket = ticketRepository.findById(ticketId).orElse(null);
+        Ticket ticket = ticketStore.getTicket(ticketId);
         LocalDateTime localTime = LocalDateTime.now();
         if (ticket == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ticket not found");
