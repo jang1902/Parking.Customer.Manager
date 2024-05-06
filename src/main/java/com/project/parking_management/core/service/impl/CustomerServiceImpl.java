@@ -5,7 +5,6 @@ import com.project.parking_management.core.port.store.InvoiceStore;
 import com.project.parking_management.core.port.store.LogActivityStore;
 import com.project.parking_management.core.port.store.TicketStore;
 import com.project.parking_management.core.service.CustomerService;
-import com.project.parking_management.infrastructure.store.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,17 +28,13 @@ public class CustomerServiceImpl implements CustomerService {
         Ticket ticket = ticketStore.getTicket(ticketId);
         LocalDateTime localTime = LocalDateTime.now();
         if (ticket == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ticket not found");
+            return new ResponseEntity<>("Ticket not found.",HttpStatus.BAD_REQUEST);
         } else {
-            if (ticket.getExpiredDate().isAfter(localTime)) {
-                LogActivity logActivity = new LogActivity(Activity.IN,ticket.getVehicle());
-                logActivityStore.saveLog(logActivity);
-            } else {
+            if (!ticket.getExpiredDate().isAfter(localTime)) {
                 ticket.setExpiredDate(localTime);
-                LogActivity logActivity = new LogActivity(Activity.IN,ticket.getVehicle());
-                logActivityStore.saveLog(logActivity);
             }
-            return ResponseEntity.status(HttpStatus.CREATED).body("Successful entered the parking lot");
+            saveLogActivity(ticket.getVehicle());
+            return new ResponseEntity<>("Successful entered the parking lot.",HttpStatus.OK);
         }
     }
 
@@ -90,4 +85,10 @@ public class CustomerServiceImpl implements CustomerService {
         parkingFee = (duration.toDays() + ((duration.toHours() > duration.toDays() * 24) ? 1 : 0)) * feePerDay;
         return parkingFee;
     }
+
+    private void saveLogActivity(Vehicle vehicle) {
+        LogActivity logActivity = new LogActivity(Activity.IN,vehicle);
+        logActivityStore.saveLog(logActivity);
+    }
+
 }
