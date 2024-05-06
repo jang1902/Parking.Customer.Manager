@@ -4,5 +4,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface CustomerService {
     ResponseEntity<String> enterParkingLot(Long ticketId, Long parkingLotId);
-    ResponseEntity<String> exitParkingLot(Long id, Long parking_lot_id);
+    ResponseEntity<String> exitParkingLot(Long id, Long parkingLotId);
 }
