@@ -39,14 +39,17 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public BookingDtoResponse getBookingById(Long id) {
+        return bookingRepository.findById(id).get().toResponseDTO();
+    }
+
+    @Override
     public ResponseEntity createBooking(BookingDtoRequest bookingDtoRequest) {
-//        Kiểm tra đăng nhập
+//      Kiểm tra đăng nhập
 
-//        Kiểm tra xe của khách có trên hệ thống ko nếu ko thì thêm mới
-
-//        Kiểm tra chỗ trống của khu đỗ
+//      Kiểm tra chỗ trống của khu đỗ
         int remainingSpace = checkRemaningSpace(bookingDtoRequest.getParking_area_id());
-//        Nếu hết chỗ trống thì thống báo cho người dùng
+//      Nếu hết chỗ trống thì thống báo cho người dùng
         if (remainingSpace == 0) {
             return new ResponseEntity<>("Khu đỗ hết chỗ trống vui lòng chọn khu đỗ khác", HttpStatus.BAD_REQUEST);
         }
@@ -70,6 +73,14 @@ public class BookingServiceImpl implements BookingService {
                     price = 2000;
                     break;
             }
+//          Tạo Booking
+            Booking booking = Booking.builder()
+                    .estimated_starttime(bookingDtoRequest.getEstimated_starttime())
+                    .estimated_endtime(bookingDtoRequest.getEstimated_endtime())
+                    .vehicle_id(bookingDtoRequest.getVehicle_id())
+                    .parking_area(parkingAreaRepository.findById(bookingDtoRequest.getParking_area_id()).get())
+                    .build();
+            bookingRepository.save(booking);
 //          Tạo hóa đơn
             InvoiceDtoRequest invoiceDtoRequest = InvoiceDtoRequest.builder()
                     .createdDate(LocalDateTime.now())
@@ -80,14 +91,6 @@ public class BookingServiceImpl implements BookingService {
                     .price(duration.toHours() * price)
                     .build();
             createInvoice(invoiceDtoRequest);
-//            Tạo Booking
-            Booking booking = Booking.builder()
-                    .estimated_starttime(bookingDtoRequest.getEstimated_starttime())
-                    .estimated_endtime(bookingDtoRequest.getEstimated_endtime())
-                    .vehicle_id(bookingDtoRequest.getVehicle_id())
-                    .parking_area(parkingAreaRepository.findById(bookingDtoRequest.getParking_area_id()).get())
-                    .build();
-            bookingRepository.save(booking);
         }
         return new ResponseEntity<>("Đặt chỗ thành công", HttpStatus.CREATED);
     }
@@ -95,11 +98,6 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public int checkRemaningSpace(Long parkingAreaId) {
         return parkingAreaRepository.findById(parkingAreaId).get().getRemaining_space();
-    }
-
-    @Override
-    public VehicleDtoResponse findVehicleByPlate(VehicleDtoRequest vehicleDtoRequest) {
-        return null;
     }
 
     @Override

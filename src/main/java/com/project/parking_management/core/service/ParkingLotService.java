@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface ParkingLotService {
     List<ParkingLot> getAllParkingLots();
+
+    ParkingLot getParkingLotById(Long id);
 }

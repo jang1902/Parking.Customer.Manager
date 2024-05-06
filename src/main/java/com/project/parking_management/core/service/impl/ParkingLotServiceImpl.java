@@ -20,4 +20,9 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     public List<ParkingLot> getAllParkingLots() {
         return parkingLotRepository.findAll();
     }
+
+    @Override
+    public ParkingLot getParkingLotById(Long id) {
+        return parkingLotRepository.findById(id).orElse(null);
+    }
 }

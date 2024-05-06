@@ -15,11 +15,12 @@ import java.util.List;
 public interface BookingService {
     List<Booking> getAllBooking();
 
+    BookingDtoResponse getBookingById(Long id);
+
     ResponseEntity createBooking (BookingDtoRequest bookingDtoRequest);
 
     int checkRemaningSpace (Long parkingAreaId);
 
-    VehicleDtoResponse findVehicleByPlate (VehicleDtoRequest vehicleDtoRequest);
     UserDtoResponse getUserByUsername (String username);
     InvoiceDtoResponse createInvoice (InvoiceDtoRequest invoiceDtoRequest);
 }
