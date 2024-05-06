@@ -3,8 +3,6 @@ package com.project.parking_management.core.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
