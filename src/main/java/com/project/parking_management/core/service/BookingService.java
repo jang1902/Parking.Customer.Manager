@@ -15,7 +15,7 @@ import java.util.List;
 public interface BookingService {
     List<Booking> getAllBooking();
 
-    BookingDtoResponse createBooking (BookingDtoRequest bookingDtoRequest);
+    ResponseEntity createBooking (BookingDtoRequest bookingDtoRequest);
 
     int checkRemaningSpace (Long parkingAreaId);
 
