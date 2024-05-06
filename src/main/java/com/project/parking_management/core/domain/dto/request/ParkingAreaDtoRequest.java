@@ -23,8 +23,4 @@ public class ParkingAreaDtoRequest {
     private int priority_remaining_space;
     private ParkingLotDtoRequest parkingLotDtoRequest;
 
-    public ParkingArea toModel () {
-        return new ParkingArea(id, name, type, total_space, priority_space, remaining_space,
-                priority_remaining_space, parkingLotDtoRequest.toModel());
-    }
 }

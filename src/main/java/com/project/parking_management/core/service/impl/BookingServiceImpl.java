@@ -9,9 +9,10 @@ import com.project.parking_management.core.domain.dto.response.UserDtoResponse;
 import com.project.parking_management.core.domain.dto.response.VehicleDtoResponse;
 import com.project.parking_management.core.domain.entity.Booking;
 import com.project.parking_management.core.service.BookingService;
+import com.project.parking_management.core.service.ParkingAreaService;
 import com.project.parking_management.infastructure.store.repository.BookingRepository;
+import com.project.parking_management.infastructure.store.repository.ParkingAreaRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,8 @@ import java.util.List;
 @AllArgsConstructor
 public class BookingServiceImpl implements BookingService {
     BookingRepository bookingRepository;
+    ParkingAreaRepository parkingAreaRepository;
+    ParkingAreaService parkingAreaService;
 
     @Override
     public List<Booking> getAllBooking() {
@@ -28,17 +31,26 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDtoResponse createBooking(BookingDtoRequest bookingDtoRequest) {
-        return null;
+        Booking booking = Booking.builder()
+                .estimated_starttime(bookingDtoRequest.getEstimated_starttime())
+                .estimated_endtime(bookingDtoRequest.getEstimated_endtime())
+                .vehicle_id(bookingDtoRequest.getVehicle_id())
+                .parking_area(parkingAreaRepository.findById(bookingDtoRequest.getParking_area_id()).get())
+                .build();
+        bookingRepository.save(booking);
+        BookingDtoResponse bookingDtoResponse = new BookingDtoResponse();
+        bookingDtoResponse = booking.toResponseDTO();
+        return bookingDtoResponse;
+    }
+
+    @Override
+    public int checkRemaningSpace(Long parkingAreaId) {
+        return parkingAreaRepository.findById(parkingAreaId).get().getRemaining_space();
     }
 
     @Override
     public VehicleDtoResponse findVehicleByPlate(VehicleDtoRequest vehicleDtoRequest) {
         return null;
-    }
-
-    @Override
-    public int checkRemaningSpace(Long parkingAreaId) {
-        return 0;
     }
 
     @Override

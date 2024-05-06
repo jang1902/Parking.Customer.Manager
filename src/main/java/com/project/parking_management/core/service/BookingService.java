@@ -8,6 +8,7 @@ import com.project.parking_management.core.domain.dto.response.InvoiceDtoRespons
 import com.project.parking_management.core.domain.dto.response.UserDtoResponse;
 import com.project.parking_management.core.domain.dto.response.VehicleDtoResponse;
 import com.project.parking_management.core.domain.entity.Booking;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -15,8 +16,10 @@ public interface BookingService {
     List<Booking> getAllBooking();
 
     BookingDtoResponse createBooking (BookingDtoRequest bookingDtoRequest);
-    VehicleDtoResponse findVehicleByPlate (VehicleDtoRequest vehicleDtoRequest);
+
     int checkRemaningSpace (Long parkingAreaId);
+
+    VehicleDtoResponse findVehicleByPlate (VehicleDtoRequest vehicleDtoRequest);
     UserDtoResponse getUserByUsername (String username);
     InvoiceDtoResponse createInvoice (InvoiceDtoRequest invoiceDtoRequest);
 }

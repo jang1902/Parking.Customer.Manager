@@ -41,13 +41,8 @@ public class ParkingArea {
     @JoinColumn(name = "parking_lot_id", nullable = false)
     private ParkingLot parking_lot;
 
-    public ParkingAreaDtoRequest toRequestDTO () {
-        return new ParkingAreaDtoRequest(id, name, type, total_space, priority_space, remaining_space,
-                priority_remaining_space, parking_lot.toRequestDTO());
-    }
-
     public ParkingAreaDtoResponse toResponseDTO () {
         return new ParkingAreaDtoResponse(id, name, type, total_space, priority_space, remaining_space,
-                priority_remaining_space, parking_lot.toResponseDTO());
+                priority_remaining_space, parking_lot.getId());
     }
 }

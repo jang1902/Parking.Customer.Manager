@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -12,11 +13,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class BookingDtoRequest {
     private Long id;
-    private Date estimated_starttime;
-    private Date estimated_endtime;
+    private LocalDateTime estimated_starttime;
+    private LocalDateTime estimated_endtime;
     private Long vehicle_id;
-    private ParkingAreaDtoRequest parkingAreaDtoRequest;
-    public Booking toModel () {
-        return new Booking(id, estimated_starttime, estimated_endtime, vehicle_id, parkingAreaDtoRequest.toModel());
-    }
+    private Long parking_area_id;
+
 }

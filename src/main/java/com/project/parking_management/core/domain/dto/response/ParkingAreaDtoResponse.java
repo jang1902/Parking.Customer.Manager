@@ -20,10 +20,6 @@ public class ParkingAreaDtoResponse {
     private int priority_space;
     private int remaining_space;
     private int priority_remaining_space;
-    private ParkingLotDtoResponse parkingLotDtoResponse;
+    private Long parkingLotID;
 
-    public ParkingArea toModel () {
-        return new ParkingArea(id, name, type, total_space, priority_space, remaining_space,
-                priority_remaining_space, parkingLotDtoResponse.toModel());
-    }
 }

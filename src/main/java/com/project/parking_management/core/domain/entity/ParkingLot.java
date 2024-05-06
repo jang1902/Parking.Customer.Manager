@@ -31,10 +31,6 @@ public class ParkingLot {
     @Column(name = "latitude", nullable = false)
     private double latitude;
 
-    public ParkingLotDtoRequest toRequestDTO () {
-        return new ParkingLotDtoRequest(id, name, address, longitude, latitude);
-    }
-
     public ParkingLotDtoResponse toResponseDTO () {
         return new ParkingLotDtoResponse(id, name, address, longitude, latitude);
     }

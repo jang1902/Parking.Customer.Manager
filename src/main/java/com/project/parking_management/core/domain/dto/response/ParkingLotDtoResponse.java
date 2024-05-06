@@ -15,7 +15,4 @@ public class ParkingLotDtoResponse {
     private double longitude;
     private double latitude;
 
-    public ParkingLot toModel () {
-        return new ParkingLot(id, name, address, longitude, latitude);
-    }
 }
