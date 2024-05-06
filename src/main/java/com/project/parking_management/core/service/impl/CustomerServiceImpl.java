@@ -46,12 +46,10 @@ public class CustomerServiceImpl implements CustomerService {
     public ResponseEntity<String> exitParkingLot(Long ticketId, Long parkingLotId) {
         try {
             Optional<LogActivity> logActivityOptional = lastLogActivity(ticketId);
-            if (logActivityOptional.isPresent()) {
-                LogActivity lastLogActivity = logActivityOptional.get();
-                boolean checkVehicleExistence = checkVehicleExistence(lastLogActivity);
-                if (!checkVehicleExistence) return new ResponseEntity<>("Vehicle does not exist", HttpStatus.BAD_REQUEST);
+            if (!logActivityOptional.isPresent()
+                    || !logActivityOptional.get().getActivity().equals(Activity.IN)) {
+                return new ResponseEntity<>("Vehicle does not exist", HttpStatus.BAD_REQUEST);
             }
-            else return new ResponseEntity<>("Vehicle does not exist", HttpStatus.BAD_REQUEST);
             Ticket ticket = ticketStore.getTicket(ticketId);
             LogActivity logActivity = new LogActivity(Activity.OUT, ticket.getVehicle());
             logActivityStore.saveLog(logActivity);
@@ -80,10 +78,6 @@ public class CustomerServiceImpl implements CustomerService {
             case MOTORBIKE -> parkingMotorbikeFeePerDay;
             case BIKE -> parkingBikeFeePerDay;
         };
-    }
-
-    private boolean checkVehicleExistence(LogActivity logActivity) {
-        return logActivity.getActivity() == Activity.IN;
     }
 
     private double calculateParkingFee(LocalDateTime expiredTime, LocalDateTime exitTime, double feePerDay) {
