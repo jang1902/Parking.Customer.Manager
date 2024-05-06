@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
     public ResponseEntity<String> exitParkingLot(Long ticketId, Long parkingLotId) {
         try {
             Optional<LogActivity> logActivityOptional = lastLogActivity(ticketId);
-            if (!logActivityOptional.isPresent()
+            if (logActivityOptional.isEmpty()
                     || !logActivityOptional.get().getActivity().equals(Activity.IN)) {
                 return new ResponseEntity<>("Vehicle does not exist", HttpStatus.BAD_REQUEST);
             }
