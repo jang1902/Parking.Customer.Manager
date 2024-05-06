@@ -5,7 +5,6 @@ import com.project.parking_management.core.port.store.InvoiceStore;
 import com.project.parking_management.core.port.store.LogActivityStore;
 import com.project.parking_management.core.port.store.TicketStore;
 import com.project.parking_management.core.service.CustomerService;
-import com.project.parking_management.infrastructure.store.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
