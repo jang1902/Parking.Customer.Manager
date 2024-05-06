@@ -4,8 +4,8 @@ import com.project.parking_management.core.domain.entity.*;
 import com.project.parking_management.core.port.store.InvoiceStore;
 import com.project.parking_management.core.port.store.LogActivityStore;
 import com.project.parking_management.core.port.store.TicketStore;
-//import com.project.parking_management.core.port.store.VehicleStore;
 import com.project.parking_management.core.service.CustomerService;
+import com.project.parking_management.infrastructure.store.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +21,28 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
     private final TicketStore ticketStore;
-    //private final VehicleStore vehicleStore;
     private final InvoiceStore invoiceStore;
     private final LogActivityStore logActivityStore;
+    private final TicketRepository ticketRepository;
+
+    @Override
+    public ResponseEntity<String> enterParkingLot(Long ticketId, Long parkingLotId) {
+        Ticket ticket = ticketRepository.findById(ticketId).orElse(null);
+        LocalDateTime localTime = LocalDateTime.now();
+        if (ticket == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ticket not found");
+        } else {
+            if (ticket.getExpiredDate().isAfter(localTime)) {
+                LogActivity logActivity = new LogActivity(Activity.IN,ticket.getVehicle());
+                logActivityStore.saveLog(logActivity);
+            } else {
+                ticket.setExpiredDate(localTime);
+                LogActivity logActivity = new LogActivity(Activity.IN,ticket.getVehicle());
+                logActivityStore.saveLog(logActivity);
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body("Successful entered the parking lot");
+        }
+    }
 
     @Override
     public ResponseEntity<String> exitParkingLot(Long ticket_id, Long parking_lot_id) {

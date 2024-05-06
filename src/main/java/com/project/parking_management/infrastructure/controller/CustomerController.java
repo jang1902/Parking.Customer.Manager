@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
     private final CustomerService customerService;
 
+    @PostMapping("/enter")
+    public Response enterParkingLot(@RequestParam Long ticketId, @RequestParam Long parkingLotId) {
+        return Response.build().message(customerService.enterParkingLot(ticketId,  parkingLotId).toString());
+    }
+
     @PostMapping("/exit")
     public Response exitParkingLot(@RequestParam Long parkingLotId, @RequestParam Long ticketId) {
         return Response.build().message(customerService.exitParkingLot(ticketId,  parkingLotId).toString());
