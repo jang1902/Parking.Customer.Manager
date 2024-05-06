@@ -1,6 +1,7 @@
 package com.project.parking_management.core.service.impl;
 
 import com.project.parking_management.core.domain.dto.request.MonthlyTickerRequest;
+import com.project.parking_management.core.domain.dto.request.MonthlyTicketRequest2;
 import com.project.parking_management.core.domain.entity.Invoice;
 import com.project.parking_management.core.domain.entity.InvoiceTypeEnum;
 import com.project.parking_management.core.domain.entity.Ticket;
@@ -15,10 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -97,6 +95,42 @@ public class TicketServiceImpl implements TicketService {
     private Vehicle findVehicle(Long id) {
         return vehicleRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Vehicle is not found with id " + id + "!"));
+    }
+
+    @Override
+    public int getTotalVehicleUsedMonthlyTicket(MonthlyTicketRequest2 request2) {
+            List<Invoice> listInvoice = invoiceRepository.findAll().stream()
+                    .filter(invoice -> invoice.getParkingLotId().equals(request2.getParkingLotId()))
+                    .filter(invoice -> invoice.getVehicle().getVehicleType().equals(request2.getType()))
+                    .filter(invoice -> invoice.getCreatedDate().getMonth().equals(request2.getDate().getMonth()))
+                    .filter(invoice -> invoice.getCreatedDate().getYear() == request2.getDate().getYear())
+                    .toList();
+            if(listInvoice.isEmpty()) return 0;
+            int result = 0;
+            for(Invoice invoice : listInvoice) {
+                if(checkExistedMonthlyTicket(invoice.getVehicle().getId(),invoice.getParkingLotId())) {
+                    result++;
+                }
+            }
+            return result;
+    }
+
+    @Override
+    public int getTotalVehicleUsedDailyTicket(MonthlyTicketRequest2 request2) {
+        List<Invoice> listInvoice = invoiceRepository.findAll().stream()
+                .filter(invoice -> invoice.getParkingLotId().equals(request2.getParkingLotId()))
+                .filter(invoice -> invoice.getVehicle().getVehicleType().equals(request2.getType()))
+                .filter(invoice -> invoice.getCreatedDate().getMonth().equals(request2.getDate().getMonth()))
+                .filter(invoice -> invoice.getCreatedDate().getYear() == request2.getDate().getYear())
+                .toList();
+        if(listInvoice.isEmpty()) return 0;
+        int result = 0;
+        for(Invoice invoice : listInvoice) {
+            if(!checkExistedMonthlyTicket(invoice.getVehicle().getId(),invoice.getParkingLotId())) {
+                result++;
+            }
+        }
+        return result;
     }
 
 }

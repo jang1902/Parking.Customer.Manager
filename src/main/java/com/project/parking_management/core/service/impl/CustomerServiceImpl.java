@@ -39,16 +39,18 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResponseEntity<String> exitParkingLot(Long ticket_id, Long parking_lot_id) {
+    public ResponseEntity<String> exitParkingLot(Long ticketId, Long parkingLotId) {
         try {
-            Optional<LogActivity> logActivityOptional = lastLogActivity(ticket_id);
-            boolean checkVehicleExistence = checkVehicleExistence(logActivityOptional);
-            if (!checkVehicleExistence) return new ResponseEntity<>("Vehicle does not exist", HttpStatus.BAD_REQUEST);
-            Ticket ticket = ticketStore.getTicket(ticket_id);
+            Optional<LogActivity> logActivityOptional = lastLogActivity(ticketId);
+            if (!logActivityOptional.isPresent()
+                    || !logActivityOptional.get().getActivity().equals(Activity.IN)) {
+                return new ResponseEntity<>("Vehicle does not exist", HttpStatus.BAD_REQUEST);
+            }
+            Ticket ticket = ticketStore.getTicket(ticketId);
             LogActivity logActivity = new LogActivity(Activity.OUT, ticket.getVehicle());
             logActivityStore.saveLog(logActivity);
             double fee = calculateParkingFee(ticket.getExpiredDate(), LocalDateTime.now(), feePerDay(ticket.getVehicle().getVehicleType()));
-            Invoice invoice = new Invoice(InvoiceTypeEnum.PARKINGPAY, fee, ticket.getVehicle(), parking_lot_id);
+            Invoice invoice = new Invoice(InvoiceTypeEnum.PARKINGPAY, fee, ticket.getVehicle(), parkingLotId);
             invoiceStore.saveInvoice(invoice);
             return new ResponseEntity<>("Vehicle exited successfully", HttpStatus.OK);
         }
@@ -57,25 +59,21 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-    private Optional<LogActivity> lastLogActivity(Long ticket_id) {
-        Vehicle vehicle = ticketStore.getTicket(ticket_id).getVehicle();
+    private Optional<LogActivity> lastLogActivity(Long ticketId) {
+        Vehicle vehicle = ticketStore.getTicket(ticketId).getVehicle();
         return logActivityStore.findByVehicleId(vehicle.getId()).stream()
                 .max(Comparator.comparing(LogActivity::getTimestamp));
     }
 
     private double feePerDay(VehicleTypeEnum vehicleType) {
-        double PARKING_CAR_FEE_PER_DAY = 10000;
-        double PARKING_MOTOBIKE_FEE_PER_DAY = 5000;
-        double PARKING_BIKE_FEE_PER_DAY = 2000;
+        double parkingCarFeePerDay = 10000;
+        double parkingMotorbikeFeePerDay = 5000;
+        double parkingBikeFeePerDay = 2000;
         return switch (vehicleType) {
-            case CAR -> PARKING_CAR_FEE_PER_DAY;
-            case MOTORBIKE -> PARKING_MOTOBIKE_FEE_PER_DAY;
-            case BIKE -> PARKING_BIKE_FEE_PER_DAY;
+            case CAR -> parkingCarFeePerDay;
+            case MOTORBIKE -> parkingMotorbikeFeePerDay;
+            case BIKE -> parkingBikeFeePerDay;
         };
-    }
-
-    private boolean checkVehicleExistence(Optional<LogActivity> logActivityOptional) {
-        return logActivityOptional.map(LogActivity::getActivity).equals(Activity.IN);
     }
 
     private double calculateParkingFee(LocalDateTime expiredTime, LocalDateTime exitTime, double feePerDay) {
